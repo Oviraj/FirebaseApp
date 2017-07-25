@@ -21,6 +21,30 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> {
 
+    @Override
+    public int getItemCount() {
+        return userList.size();
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView myTextView;
+        public TextView myCountryTextView;
+        public TextView myNumber;
+        public TextView myEmail;
+        public Button myButtonDelete;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            myTextView = (TextView) itemView.findViewById(R.id.tvName);
+            myCountryTextView = (TextView) itemView.findViewById(R.id.tvCountry);
+            myNumber=(TextView) itemView.findViewById(R.id.tvWeight);
+            myEmail = (TextView) itemView.findViewById(R.id.tvEmail);
+            myButtonDelete = (Button) itemView.findViewById(R.id.deleteButton);
+        }
+    }
+
+
     private final Context mContext;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private List<User> userList = new ArrayList<>();
@@ -47,7 +71,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 
         holder.myTextView.setText(user.getName());
         holder.myCountryTextView.setText(user.getCountry());
-        holder.myWeight.setText(String.valueOf(user.getWeight()));
+        holder.myNumber.setText(String.valueOf(user.getWeight()));
+        holder.myEmail.setText(user.getEmail());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,11 +95,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
                                 databaseReference.child("users").child(snapshot.getKey().toString()).removeValue();
                                 userList.remove(position);
                                 notifyDataSetChanged();
-                                if (userList.size() == 0) {
-                                    MainActivity.textViewEmptyView.setVisibility(View.VISIBLE);
-                                }
                                 break;
-
                             }
 
                         }
@@ -90,24 +111,4 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return userList.size();
     }
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView myTextView;
-        public TextView myCountryTextView;
-        public TextView myWeight;
-        public Button myButtonDelete;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            myTextView = (TextView) itemView.findViewById(R.id.tvName);
-            myCountryTextView = (TextView) itemView.findViewById(R.id.tvCountry);
-            myWeight=(TextView) itemView.findViewById(R.id.tvWeight);
-            myButtonDelete = (Button) itemView.findViewById(R.id.deleteButton);
-        }
-    }
-}

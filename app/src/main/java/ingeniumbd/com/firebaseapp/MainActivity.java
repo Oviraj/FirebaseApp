@@ -21,9 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * Created by dharma kshetri(@dharma.kshetri@gmail.com) on 12/14/16.
- */
+
 public class MainActivity extends AppCompatActivity {
     public static  final String TAG="FIREBASE";
 
@@ -31,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
     public  UserAdapter myAdapter;
     public  EditText editTextName;
     public  EditText editTextCountry;
-    public  EditText editTextWeight;
-    public  static TextView  textViewEmptyView;
+    public  EditText editTextPhone;
+    public  EditText editTextEmail;
     Button buttonAdd;
     public  ProgressBar myProgressBar;
     DatabaseReference databaseReference;
@@ -47,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void creatingLayouts(){
         myProgressBar=(ProgressBar) findViewById(R.id.loader);
-        textViewEmptyView = (TextView) findViewById(R.id.tvEmptyView);
         editTextName = (EditText) findViewById(R.id.nameEditText);
         editTextCountry=(EditText) findViewById(R.id.countryEditText);
-        editTextWeight=(EditText) findViewById(R.id.weightEditText);
+        editTextPhone=(EditText) findViewById(R.id.weightEditText);
+        editTextEmail = (EditText) findViewById(R.id.emailEditText);
         buttonAdd = (Button) findViewById(R.id.addButton);
         recyclerListView=(RecyclerView) findViewById(R.id.recylerview_list);
         recyclerListView.setLayoutManager(new LinearLayoutManager(this));
@@ -64,8 +62,9 @@ public class MainActivity extends AppCompatActivity {
 
         String name = editTextName.getText().toString().trim();
         String country=editTextCountry.getText().toString().trim();
-        double weight=Double.parseDouble(editTextWeight.getText().toString().trim());
-        User user= new User(name, country, weight);
+        double weight=Double.parseDouble(editTextPhone.getText().toString().trim());
+        String email = editTextEmail.getText().toString().trim();
+        User user= new User(name, country, weight,email);
 
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(getApplicationContext(), "Please enter name",
@@ -77,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please enter country",
                     Toast.LENGTH_SHORT).show();
             return;
+        }
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(getApplicationContext(), "Pleas enter valid email",
+                    Toast.LENGTH_SHORT).show();
         }
 
         updateDatabase(user);
@@ -90,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
 
         editTextName.setText(null);
         editTextCountry.setText(null);
-        editTextWeight.setText(null);
+        editTextPhone.setText(null);
+        editTextEmail.setText(null);
 
         updateAdapter();
 
@@ -135,10 +139,10 @@ public class MainActivity extends AppCompatActivity {
     //display the user on Adapter
     public void displayUsers(List<User> ls){
         myProgressBar.setVisibility(View.GONE);
-        textViewEmptyView.setVisibility(View.GONE);
         recyclerListView.setVisibility(View.VISIBLE);
         editTextName.setText(null);
         editTextCountry.setText(null);
+        editTextEmail.setText(null);
         myAdapter.setData(ls);
         myAdapter.notifyDataSetChanged();
     }

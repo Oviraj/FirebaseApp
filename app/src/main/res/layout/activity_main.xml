@@ -8,8 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_margin="5dp"
-        >
+        android:layout_margin="5dp">
 
         <EditText
             android:id="@+id/nameEditText"
@@ -24,20 +23,34 @@
             android:layout_toRightOf="@+id/nameEditText"
             android:layout_gravity="center_vertical"
             android:hint="Country" />
+
         <Button
             android:id="@+id/addButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:onClick="btnAddOnClick"
             android:text="Add" />
+
         <EditText
             android:id="@+id/weightEditText"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
+            android:inputType="phone"
             android:layout_below="@+id/nameEditText"
-            android:hint="weight" />
+            android:hint="Phone" />
+
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="150dp"
+            android:inputType="textEmailAddress"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/countryEditText"
+            android:layout_toRightOf="@+id/weightEditText"
+            android:layout_gravity="center_vertical"
+            android:hint="Email" />
+
     </RelativeLayout>
     <View
         android:id="@+id/divider"
@@ -63,10 +76,4 @@
         android:layout_margin="10dp"
         android:visibility="visible" />
 
-    <TextView
-        android:id="@+id/tvEmptyView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="No Users Found"></TextView>
 </RelativeLayout>
